@@ -30,12 +30,18 @@ A comprehensive quantitative trading and portfolio simulation framework with bac
 
 ### Installation
 
-**1. Clone the repository:**
+**1. Get the code:**
 
 ```bash
-git clone https://github.com/yourusername/quantitive.git
+# Option A: Clone from GitHub (if you've pushed it there)
+git clone https://github.com/YOUR_GITHUB_USERNAME/quantitive.git
 cd quantitive
+
+# Option B: If you already have the code locally
+cd /path/to/quantitive
 ```
+
+> **Note:** Replace `YOUR_GITHUB_USERNAME` with your actual GitHub username if you've pushed this to GitHub.
 
 **2. Create a virtual environment (recommended):**
 
