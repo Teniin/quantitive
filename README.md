@@ -2,61 +2,95 @@
 
 A comprehensive quantitative trading and portfolio simulation framework with backtesting, Monte Carlo simulations, and advanced risk analytics.
 
-## 🌟 Features
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Streamlit](https://img.shields.io/badge/streamlit-1.28+-red.svg)
 
-### Core Capabilities
-- **Portfolio Management**: Track holdings, execute trades, and monitor performance
-- **Backtesting Engine**: Test trading strategies on historical market data
-- **Monte Carlo Simulations**: Probabilistic forecasting of portfolio performance
-- **Risk Analytics**: Comprehensive risk metrics including Sharpe, Sortino, VaR, and more
-- **Real-time Market Data**: Integration with yfinance for live and historical data
-- **Interactive Dashboard**: Streamlit-based web interface for visualization and analysis
+---
 
-### Trading Strategies
-- Buy and Hold
-- Moving Average Crossover
-- Extensible framework for custom strategies
+## 📋 Table of Contents
 
-### Risk Metrics
-- Sharpe Ratio
-- Sortino Ratio
-- Calmar Ratio
-- Maximum Drawdown
-- Value at Risk (VaR)
-- Conditional Value at Risk (CVaR)
-- Beta and Alpha
-- Information Ratio
-- Volatility metrics
-- And more...
+- [Features](#-features)
+- [Getting Started](#-getting-started)
+- [Running the App](#-running-the-app)
+- [Usage Examples](#-usage-examples)
+- [Project Structure](#-project-structure)
+- [Dashboard Features](#-dashboard-features)
+- [Documentation](#-documentation)
 
-## 🚀 Quick Start
+---
+
+## ⚡ Getting Started
+
+### Prerequisites
+
+- Python 3.8 or higher
+- pip (Python package installer)
+- Internet connection (for fetching market data)
 
 ### Installation
 
-1. Clone the repository:
+**1. Clone the repository:**
+
 ```bash
-git clone <repository-url>
+git clone https://github.com/yourusername/quantitive.git
 cd quantitive
 ```
 
-2. Install dependencies:
+**2. Create a virtual environment (recommended):**
+
+```bash
+# On macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+
+# On Windows
+python -m venv venv
+venv\Scripts\activate
+```
+
+**3. Install dependencies:**
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### Running the Demo
+---
 
-Run the comprehensive demo script:
+## 🚀 Running the App
+
+### Option 1: Launch the Interactive Dashboard (Recommended)
+
+The modern Vercel-inspired dashboard provides the best user experience:
+
+```bash
+streamlit run dashboard.py
+```
+
+The dashboard will automatically open in your browser at `http://localhost:8501`
+
+**Dashboard Pages:**
+- 🏠 **Home** - Overview and features
+- 📊 **Backtesting** - Test trading strategies
+- 🎲 **Monte Carlo** - Run probabilistic simulations
+- ⚠️ **Risk Analysis** - Comprehensive risk metrics
+- 💼 **Portfolio** - Manage holdings and track performance
+
+### Option 2: Run Demo Scripts
+
+Run all demos interactively:
+
 ```bash
 python demo.py
 ```
 
-Or run individual demos:
+Or run specific demos:
+
 ```bash
-# Buy and Hold backtest
+# Backtest a Buy & Hold strategy
 python demo.py backtest
 
-# Moving Average Crossover
+# Moving Average Crossover strategy
 python demo.py ma
 
 # Monte Carlo simulation
@@ -68,54 +102,90 @@ python demo.py historical_mc
 # Risk metrics analysis
 python demo.py risk
 
-# Portfolio management
+# Portfolio management demo
 python demo.py portfolio
 ```
 
-### Launching the Dashboard
+### Option 3: Use as a Python Library
 
-Start the interactive Streamlit dashboard:
-```bash
-streamlit run dashboard.py
+```python
+from portfolio_simulator import Backtester, DataFetcher
+from portfolio_simulator.backtester import BuyAndHoldStrategy
+
+# Create and run a backtest
+symbols = ['AAPL', 'MSFT', 'GOOGL', 'AMZN']
+strategy = BuyAndHoldStrategy(symbols, weights={s: 0.25 for s in symbols})
+
+backtester = Backtester(strategy, initial_capital=100000)
+results = backtester.run(symbols, '2022-01-01', '2024-01-01')
+
+backtester.print_summary()
+backtester.plot_results()
 ```
 
-The dashboard will open in your browser at `http://localhost:8501`
+---
+
+## 🌟 Features
+
+### Core Capabilities
+
+✅ **Portfolio Management** - Track holdings, execute trades, and monitor performance
+✅ **Backtesting Engine** - Test trading strategies on historical market data
+✅ **Monte Carlo Simulations** - Probabilistic forecasting with 1000+ scenarios
+✅ **Risk Analytics** - 15+ comprehensive risk metrics
+✅ **Real-time Market Data** - Integration with yfinance for live and historical data
+✅ **Modern UI** - Vercel-inspired Streamlit dashboard with dark theme
+
+### Trading Strategies
+
+- **Buy and Hold** - Long-term investment strategy with custom weights
+- **Moving Average Crossover** - Technical analysis strategy (50/200 day MA)
+- **Extensible Framework** - Easy to add custom strategies
+
+### Risk Metrics
+
+| Metric | Description |
+|--------|-------------|
+| Sharpe Ratio | Risk-adjusted return measure |
+| Sortino Ratio | Downside risk-adjusted return |
+| Calmar Ratio | Return vs. maximum drawdown |
+| Maximum Drawdown | Largest peak-to-trough decline |
+| Value at Risk (VaR) | Potential loss at confidence level |
+| CVaR | Expected loss beyond VaR |
+| Beta & Alpha | Market-relative performance |
+| Volatility | Price variation measure |
+
+---
 
 ## 📚 Usage Examples
 
-### 1. Backtesting a Strategy
+### Example 1: Backtesting a Portfolio
 
 ```python
 from portfolio_simulator import Backtester
 from portfolio_simulator.backtester import BuyAndHoldStrategy
 
-# Define your portfolio
+# Define portfolio
 symbols = ['AAPL', 'MSFT', 'GOOGL', 'AMZN']
-weights = {symbol: 0.25 for symbol in symbols}
+weights = {'AAPL': 0.25, 'MSFT': 0.25, 'GOOGL': 0.25, 'AMZN': 0.25}
 
 # Create strategy
 strategy = BuyAndHoldStrategy(symbols, weights)
 
-# Create backtester
-backtester = Backtester(
-    strategy=strategy,
-    initial_capital=100000,
-    commission=0.001
-)
-
 # Run backtest
+backtester = Backtester(strategy, initial_capital=100000, commission=0.001)
 results = backtester.run(
     symbols=symbols,
     start_date='2022-01-01',
     end_date='2024-01-01'
 )
 
-# Print results
+# View results
 backtester.print_summary()
 backtester.plot_results()
 ```
 
-### 2. Monte Carlo Simulation
+### Example 2: Monte Carlo Simulation
 
 ```python
 from portfolio_simulator import MonteCarloSimulator
@@ -126,7 +196,7 @@ simulator = MonteCarloSimulator(random_seed=42)
 # Run simulation
 simulations = simulator.simulate_portfolio(
     initial_value=100000,
-    expected_return=0.08,  # 8% annual return
+    expected_return=0.08,  # 8% expected annual return
     volatility=0.15,       # 15% annual volatility
     time_horizon=252,      # 1 year (trading days)
     n_simulations=1000
@@ -138,7 +208,7 @@ simulator.plot_simulations()
 simulator.plot_confidence_intervals()
 ```
 
-### 3. Risk Analysis
+### Example 3: Risk Analysis
 
 ```python
 from portfolio_simulator import DataFetcher, RiskMetrics
@@ -155,12 +225,12 @@ metrics = RiskMetrics.calculate_all_metrics(
     risk_free_rate=0.04
 )
 
-# Print metrics
+# Display metrics
 for metric, value in metrics.items():
     print(f"{metric}: {value}")
 ```
 
-### 4. Portfolio Management
+### Example 4: Portfolio Management
 
 ```python
 from portfolio_simulator import Portfolio
@@ -172,79 +242,111 @@ portfolio = Portfolio(initial_capital=100000, name="My Portfolio")
 # Execute trades
 portfolio.buy('AAPL', 100, 180.0, datetime.now())
 portfolio.buy('MSFT', 50, 380.0, datetime.now())
+portfolio.buy('GOOGL', 75, 140.0, datetime.now())
 
-# Get current prices (example)
-current_prices = {'AAPL': 185.0, 'MSFT': 390.0}
+# Get current prices
+current_prices = {'AAPL': 185.0, 'MSFT': 390.0, 'GOOGL': 145.0}
 
-# Get portfolio summary
+# View summary
 summary = portfolio.summary(current_prices)
 print(f"Portfolio Value: ${summary['portfolio_value']:,.2f}")
 print(f"Total Return: {summary['total_return_pct']}")
+print(f"Allocation: {summary['allocation']}")
 ```
+
+---
 
 ## 🏗️ Project Structure
 
 ```
 quantitive/
-├── portfolio_simulator/
+├── portfolio_simulator/          # Core package
 │   ├── __init__.py              # Package initialization
-│   ├── data_fetcher.py          # Market data fetching
+│   ├── data_fetcher.py          # Market data fetching (yfinance)
 │   ├── portfolio.py             # Portfolio management
-│   ├── backtester.py            # Backtesting engine
-│   ├── risk_metrics.py          # Risk calculations
+│   ├── backtester.py            # Backtesting engine + strategies
+│   ├── risk_metrics.py          # Risk calculations (15+ metrics)
 │   └── monte_carlo.py           # Monte Carlo simulations
+│
 ├── tests/                       # Unit tests
-├── demo.py                      # Demo script
-├── dashboard.py                 # Streamlit dashboard
-├── requirements.txt             # Dependencies
-└── README.md                    # Documentation
+│   ├── __init__.py
+│   ├── test_portfolio.py        # Portfolio tests
+│   └── test_risk_metrics.py    # Risk metrics tests
+│
+├── dashboard.py                 # Streamlit web dashboard
+├── demo.py                      # Demo scripts
+├── requirements.txt             # Python dependencies
+├── README.md                    # This file
+└── .gitignore                   # Git ignore rules
 ```
+
+---
 
 ## 📊 Dashboard Features
 
-The Streamlit dashboard provides an interactive interface with five main sections:
+The modern Streamlit dashboard provides an intuitive interface with five main sections:
 
-### 1. Home
-- Overview of features
-- Quick navigation
+### 1. 🏠 Home
+- Platform overview
+- Feature highlights with animated cards
+- Quick statistics
 
-### 2. Backtesting
-- Configure and run strategy backtests
-- Interactive parameter adjustment
-- Performance visualization
-- Detailed metrics and transaction history
-
-### 3. Monte Carlo Simulation
-- Parametric and bootstrap simulations
-- Adjustable parameters (return, volatility, horizon)
-- Probability distributions
-- Confidence intervals
-
-### 4. Risk Analysis
-- Comprehensive risk metrics
-- Performance comparisons
-- Visual analytics
-
-### 5. Portfolio Manager
-- Add/remove positions
-- Track portfolio value
-- View allocation
+### 2. 📊 Backtesting
+- Strategy configuration panel
+- Multiple strategy support
+- Interactive performance charts
+- Comprehensive metrics table
 - Transaction history
+
+### 3. 🎲 Monte Carlo Simulation
+- Parametric and bootstrap methods
+- Adjustable parameters (return, volatility, horizon)
+- Simulation path visualization
+- Probability distributions
+- Percentile analysis
+
+### 4. ⚠️ Risk Analysis
+- 15+ comprehensive risk metrics
+- Performance vs. benchmark comparison
+- Cumulative returns charts
+- Sharpe, Sortino, VaR, CVaR, and more
+
+### 5. 💼 Portfolio Manager
+- Add/remove positions
+- Real-time portfolio valuation
+- Allocation pie chart
+- Transaction history
+- Performance tracking
+
+### Design Features
+
+The dashboard features a **modern Vercel-inspired design**:
+
+✨ Dark theme with subtle gradients
+✨ Glassmorphism effects
+✨ Smooth animations and transitions
+✨ Professional typography (Inter font)
+✨ Responsive layout
+✨ Interactive charts with Plotly
+
+---
 
 ## 🔧 Technical Details
 
 ### Dependencies
-- **pandas**: Data manipulation and analysis
-- **numpy**: Numerical computations
-- **matplotlib**: Visualization
-- **yfinance**: Market data
-- **streamlit**: Web dashboard
-- **scipy**: Statistical computations
-- **seaborn**: Enhanced visualizations
-- **plotly**: Interactive charts
+
+- **pandas** (≥2.0.0) - Data manipulation
+- **numpy** (≥1.24.0) - Numerical computations
+- **matplotlib** (≥3.7.0) - Visualization
+- **yfinance** (≥0.2.28) - Market data
+- **streamlit** (≥1.28.0) - Web dashboard
+- **scipy** (≥1.11.0) - Statistical functions
+- **seaborn** (≥0.12.0) - Enhanced plots
+- **plotly** (≥5.17.0) - Interactive charts
 
 ### Data Source
-Market data is fetched using the yfinance library, which provides:
+
+Market data is fetched using **yfinance**, which provides:
 - Historical price data
 - Real-time quotes
 - Company information
@@ -252,26 +354,86 @@ Market data is fetched using the yfinance library, which provides:
 
 ### Risk Metrics Formulas
 
-**Sharpe Ratio**: `(Return - Risk-Free Rate) / Volatility`
+**Sharpe Ratio**
+```
+Sharpe = (Return - Risk-Free Rate) / Volatility
+```
 
-**Sortino Ratio**: `(Return - Risk-Free Rate) / Downside Deviation`
+**Sortino Ratio**
+```
+Sortino = (Return - Risk-Free Rate) / Downside Deviation
+```
 
-**Calmar Ratio**: `Annualized Return / Max Drawdown`
+**Maximum Drawdown**
+```
+Max DD = (Trough Value - Peak Value) / Peak Value
+```
 
-**Maximum Drawdown**: `(Trough Value - Peak Value) / Peak Value`
+**Value at Risk (VaR)**
+```
+VaR = Percentile of returns at confidence level
+```
 
-**Beta**: `Covariance(Portfolio, Market) / Variance(Market)`
+---
 
-**Alpha**: `Portfolio Return - [Risk-Free Rate + Beta × (Market Return - Risk-Free Rate)]`
+## 🧪 Running Tests
+
+```bash
+# Install pytest if not already installed
+pip install pytest
+
+# Run all tests
+pytest tests/
+
+# Run specific test file
+pytest tests/test_portfolio.py
+
+# Run with coverage
+pytest --cov=portfolio_simulator tests/
+```
+
+---
 
 ## 🎯 Use Cases
 
-1. **Strategy Development**: Test and validate trading strategies before live deployment
-2. **Risk Assessment**: Analyze portfolio risk exposure and characteristics
-3. **Performance Attribution**: Understand sources of returns and risks
-4. **Scenario Analysis**: Explore potential future outcomes via Monte Carlo
-5. **Portfolio Optimization**: Compare different asset allocations
-6. **Educational**: Learn about quantitative finance and portfolio theory
+1. **Strategy Development** - Test and validate trading strategies before deployment
+2. **Risk Assessment** - Analyze portfolio risk exposure and characteristics
+3. **Performance Attribution** - Understand sources of returns and risks
+4. **Scenario Analysis** - Explore potential future outcomes via Monte Carlo
+5. **Portfolio Optimization** - Compare different asset allocations
+6. **Education** - Learn about quantitative finance and portfolio theory
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Issue: ModuleNotFoundError**
+```bash
+# Solution: Install dependencies
+pip install -r requirements.txt
+```
+
+**Issue: yfinance data fetch errors**
+```bash
+# Solution: Check internet connection and try again
+# yfinance sometimes has rate limits, wait a few seconds and retry
+```
+
+**Issue: Streamlit not opening in browser**
+```bash
+# Solution: Manually open the URL shown in terminal
+# Usually: http://localhost:8501
+```
+
+**Issue: Port 8501 already in use**
+```bash
+# Solution: Use a different port
+streamlit run dashboard.py --server.port 8502
+```
+
+---
 
 ## 🔮 Future Enhancements
 
@@ -280,28 +442,85 @@ Market data is fetched using the yfinance library, which provides:
 - [ ] Options and derivatives support
 - [ ] Machine learning integration
 - [ ] Real-time trading capabilities
-- [ ] Portfolio optimization algorithms
+- [ ] Portfolio optimization algorithms (Markowitz, Black-Litterman)
 - [ ] Custom indicator builder
-- [ ] Advanced reporting and exports
+- [ ] Advanced reporting and exports (PDF, Excel)
+- [ ] API for programmatic access
+- [ ] Historical scenario replay
+
+---
 
 ## 📝 License
 
 This project is open source and available under the MIT License.
 
+---
+
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
+Contributions are welcome! Please feel free to submit pull requests or open issues for:
 
-## 📧 Contact
+- Bug reports
+- Feature requests
+- Documentation improvements
+- Code enhancements
 
-For questions or feedback, please open an issue on the repository.
+### Development Setup
 
-## 🙏 Acknowledgments
-
-- Market data provided by Yahoo Finance via yfinance
-- Built with Python and modern data science libraries
-- Inspired by quantitative finance research and best practices
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ---
 
-**Disclaimer**: This tool is for educational and research purposes only. Past performance does not guarantee future results. Always do your own research before making investment decisions.
+## 📧 Support
+
+For questions, issues, or feedback:
+
+- Open an issue on GitHub
+- Check existing issues for solutions
+- Review the documentation
+
+---
+
+## 🙏 Acknowledgments
+
+- Market data provided by **Yahoo Finance** via yfinance
+- Built with **Python** and modern data science libraries
+- Inspired by quantitative finance research and best practices
+- UI design inspired by **Vercel**
+
+---
+
+## ⚠️ Disclaimer
+
+**This tool is for educational and research purposes only.**
+
+- Past performance does not guarantee future results
+- Not financial advice
+- Always do your own research before making investment decisions
+- The authors are not responsible for any financial losses
+
+---
+
+## 📸 Screenshots
+
+### Dashboard Home
+![Dashboard Home](https://via.placeholder.com/800x400?text=Dashboard+Home)
+
+### Backtesting Results
+![Backtesting](https://via.placeholder.com/800x400?text=Backtesting+Results)
+
+### Monte Carlo Simulation
+![Monte Carlo](https://via.placeholder.com/800x400?text=Monte+Carlo+Simulation)
+
+### Risk Analysis
+![Risk Analysis](https://via.placeholder.com/800x400?text=Risk+Analysis)
+
+---
+
+**Made with ❤️ for quantitative traders and investors**
+
+⭐ Star this repo if you find it useful!
